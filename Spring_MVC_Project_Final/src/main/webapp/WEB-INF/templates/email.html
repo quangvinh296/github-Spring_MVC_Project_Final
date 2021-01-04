@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+            <meta name="viewport"
+                  content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+                <meta http-equiv="X-UA-Compatible" content="ie=edge">
+                    <title>Confirm Order Email</title>
+
+                    </head>
+                    <body>
+                        <div th:if="${content == 'confirm'}">
+                            <p>Confirm Order Email</p>
+                            <p>Welcome</p>
+                            <p>Dear <b th:text="${order.fullName}"></b> </p>
+                            <p>Your Phone: <b th:text="${order.phone}"></b> </p>
+                            <p>Your Address:<b th:text="${order.address}"></b> </p>
+
+                            <p>Number Order: <b th:text="${order.orderUId}"></b> </p>
+                            <p>Date Order: <b th:text="${order.dateOrder}"></b> </p>
+                            <div th:if="${pro != null}">
+                                <p>Code Promotion: <b th:text="${pro.code}"></b></p>
+                            </div>
+                            <p>Your items:</p>
+                            <table border="1">
+                                <tr>
+                                    <th>Name Product</th>
+                                    <th>Quantity</th>
+                                    <th>Price</th>
+                                    <th>Total</th>
+                                </tr>
+                                <tr th:each="detail : ${orderDetails}">
+                                    <td><b th:text="${detail.product.name}"></b></td>
+                                    <td><b th:text="${detail.quantity}"></b></td>
+                                    <td><b th:text="${#numbers.formatDecimal(detail.discount, 0, 'COMMA', 0, 'POINT')}"></b>VND</td>
+                                    <td><b th:text="${#numbers.formatDecimal(detail.discount*detail.quantity, 0, 'COMMA', 0, 'POINT')}"></b>VND</td>
+                                </tr>
+                            </table>
+                            <div th:if="${pro == null}">
+                                <p> The total: <b th:text="${#numbers.formatDecimal(order.totalOrder, 0, 'COMMA', 0, 'POINT')}"></b>VND</p>
+                            </div>
+
+                            <div th:if="${pro != null}">
+                                <p> The total: <b th:text="${#numbers.formatDecimal(order.totalOrder + pro.discount*order.totalOrder, 0, 'COMMA', 0, 'POINT')}"></b>VND</p>
+                                <p>The amount discount: <b th:text="${#numbers.formatDecimal(pro.discount*order.totalOrder, 0, 'COMMA', 0, 'POINT')}"></b>VND</p>
+                                <p>The total amount paid: <b th:text="${#numbers.formatDecimal(order.totalOrder, 0, 'COMMA', 0, 'POINT')}"></b>VND</p>
+                            </div>
+
+                            <p> if there is an error please call phone 035694987"</p>
+                            <p>Thank you<br>Sublime OnlineShop </p>
+                        </div>
+
+
+
+
+                        <div th:if="${content == 'cancel'}">
+                            <p>Cancel Order Email</p>
+                            <div>
+                                <p>Dear <b th:text="${order.fullName}"></b> </p>
+                                <p>Your Phone: <b th:text="${order.phone}"></b> </p>
+                                <p>Your Address:<b th:text="${order.address}"></b> </p>
+
+                            </div>
+                            <p>Number Order: <b th:text="${order.orderUId}"></b> </p>
+                            <p>Date order: <b th:text="${order.dateOrder}"></b> </p>
+                            <p>Your items:</p>
+                            <table border="1">
+                                <tr>
+                                    <th>Name Product</th>
+                                    <th>Quantity</th>
+                                    <th>Price</th>
+                                    <th>Total</th>
+                                </tr>
+                                <tr th:each="detail : ${orderDetails}">
+                                    <td><b th:text="${detail.product.name}"></b></td>
+                                    <td><b th:text="${detail.quantity}"></b></td>
+                                    <td><b th:text="${#numbers.formatDecimal(detail.discount, 0, 'COMMA', 0, 'POINT')}"></b>VND</td>
+                                    <td><b th:text="${#numbers.formatDecimal(detail.discount*detail.quantity, 0, 'COMMA', 0, 'POINT')}"></b>VND</td>
+                                </tr>
+                            </table>
+                            <p>The total amount paid: <b th:text="${#numbers.formatDecimal(order.totalOrder, 0, 'COMMA', 0, 'POINT')}"></b>VND</p>
+                            <p>The cancelation charge: <b th:text="${#numbers.formatDecimal(order.totalOrder*0.2, 0, 'COMMA', 0, 'POINT')}"></b> VND (20% of total amount due to Company Terms)</p>
+                            <p>The refundable amount: <b th:text="${#numbers.formatDecimal(order.totalOrder*0.8, 0, 'COMMA', 0, 'POINT')}"></b>VND</p>
+                            <p>if there is an error please call phone 035694987"</p>
+                            <p>Thank you<br>Sublime OnlineShop </p>
+
+                        </div>
+                    </body>
+                    </html>
+
+
+
